@@ -21,6 +21,7 @@ class Appointment extends Component {
             age: '',
             apptDate: '',
             phone:'',
+            ageQuantifier: 'years',
             address :{
                 street: '',
                 street1: '',
@@ -52,6 +53,55 @@ class Appointment extends Component {
                 disableAdd: false
             });
         }
+
+        if(e.target.name === "dob" || e.target.name === "ageQuantifier") {
+            let today = new Date();
+            let inputDate;
+            let ageQuantifier;
+            if(e.target.name === "ageQuantifier") {
+                inputDate = (this.state.patientData.dob) ? new Date(this.state.patientData.dob) : "";
+                ageQuantifier = e.target.value;
+            }
+            else {
+                 inputDate = new Date(e.target.value);
+                 ageQuantifier = this.state.patientData.ageQuantifier;
+            }
+            console.log(inputDate);
+            if(inputDate !== "") {
+                let timeDiff = today - inputDate;
+                
+                let years = Math.floor(timeDiff / (365 * 24 * 60 * 60 * 1000));
+                if(ageQuantifier == "years") {
+                    newpatientData.age = years;
+                }
+                if(ageQuantifier == "months") {
+                    newpatientData.age = Math.floor(years * 12);
+                }
+                if(ageQuantifier == "days") {
+                    newpatientData.age = Math.floor(timeDiff / (24 * 60 * 60 * 1000));
+                }
+            }
+        }
+
+        if(e.target.name === "age") {
+            let input = e.target.value;
+            let ageQuantifier = this.state.patientData.ageQuantifier;
+            let timeNow = new Date().getTime();
+
+            if(ageQuantifier == "years") {          
+                let newDob = new Date(timeNow - (input * 365 * 24 * 60 * 60 * 1000));
+                newpatientData.dob = newDob.toISOString().split('T')[0];
+            }
+            if(ageQuantifier == "months") {
+                let newDob = new Date(timeNow - (input * 30 * 24 * 60 * 60 * 1000));
+                newpatientData.dob = newDob.toISOString().split('T')[0];
+            }
+            if(ageQuantifier == "days") {
+                let newDob = new Date(timeNow - (input * 24 * 60 * 60 * 1000));
+                newpatientData.dob = newDob.toISOString().split('T')[0];
+            }
+        }
+
         this.setState({ patientData: newpatientData });
     }
 
@@ -179,7 +229,6 @@ class Appointment extends Component {
     }
 
     savePatientDetails = (e) => {
-        e.preventDefault();
         let id = 'P_' + Math.random().toString(16).substr(2, 6);
 
         const { patientData : { patient, age, gender, apptDate }, billDetails } = this.state;
@@ -216,11 +265,11 @@ class Appointment extends Component {
         .then(result => {
             console.log(result);
         })
-        .catch(error => console.log(error))
+        .catch(error => console.log(error));
     }
 
     render() {
-        const { patientData: { patient, gender, dob, age, apptDate, phone } } = this.state;
+        const { patientData: { patient, gender, dob, age, apptDate, phone, ageQuantifier } } = this.state;
         const { patientData: { address: { street, street1, city, state, zipCode, country } } } = this.state;
         let tableHeaders = {
             sNo: "SNo",
@@ -286,7 +335,7 @@ class Appointment extends Component {
                                 onChange={this.updatePatientData}
                                 required
                             />
-                            <select name="ageQuantifier" id="ageQ">
+                            <select name="ageQuantifier" id="ageQ" value={ageQuantifier} onChange={this.updatePatientData}>
                                 <option value="years">Years</option>
                                 <option value="months">Months</option>
                                 <option value="days">Days</option>
