@@ -125,21 +125,18 @@ app.get("/patient", (req, res, next) => {
     let filterQueryFound = false;
     //Filter by fromDate
     if((fromDate != undefined && fromDate !== "")) {
-        filterQueryFound = true;
         patientDetails.map(patient => {
             if( new Date(patient.apptDate) >= new Date(fromDate) ) {
-                console.log(`apptDate === ${new Date(patient.apptDate)}`);
-                console.log(`fromDate === ${new Date(fromDate)}`);
                 result.push(patient)
             }
          })
+         filterQueryFound = true;
     }
     //Filter by toDate
     if((toDate != undefined && toDate !== "")) {
-        filterQueryFound = true;
         let patientDetailsToFilter;
 
-        if(result.length > 0) {
+        if(filterQueryFound) {
             patientDetailsToFilter = result;
             result = [];
         }
@@ -148,34 +145,30 @@ app.get("/patient", (req, res, next) => {
         }
         patientDetailsToFilter.map(patient => {
             if( new Date(patient.apptDate) <= new Date(toDate) ) {
-                console.log(`apptDate === ${new Date(patient.apptDate)}`);
-                console.log(`toDate === ${new Date(toDate)}`);
                 result.push(patient)
             }
-            // else {
-            //     result = [];
-            // }
          })
+        filterQueryFound = true;
     }
     //Filter by status
     if((status != undefined && status !== "")) {
-        filterQueryFound = true;
         let patientDetailsToFilter;
 
-        if(result.length > 0) {
+        if(filterQueryFound) {
             patientDetailsToFilter = result;
             result = [];
         }
         else {
             patientDetailsToFilter = patientDetails;
         }
-        console.log(patientDetailsToFilter);
         patientDetailsToFilter.map(patient => {
             if(patient.status.toString() == status.toString()) {
                 result.push(patient)
             }
         })
+        filterQueryFound = true;
     }
+
     if(!filterQueryFound) {
         result = patientDetails;
     }

@@ -101,7 +101,6 @@ class Billing extends Component {
                 paidAmount: payableAmount,
                 paymentMode: payMode
             }
-            console.log(this.state.patientDetails);
             let updatedPatientDetails = {...this.state.patientDetails};
             updatedPatientDetails["totalBalance"] = parseInt(totalBalance) - parseInt(payableAmount);
             updatedPatientDetails["amountPaid"] = parseInt(amountPaid) + parseInt(payableAmount);
@@ -112,7 +111,6 @@ class Billing extends Component {
                 updatedPatientDetails["status"] = "Fully Billed";
             }
             updatedPatientDetails.transactions.push(transactionDetails);
-            console.log(updatedPatientDetails);
             fetch("http://localhost:3001/patient/" + id, {
                 method: "PUT",
                 body: JSON.stringify(updatedPatientDetails),
