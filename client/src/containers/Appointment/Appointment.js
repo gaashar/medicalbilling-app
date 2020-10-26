@@ -16,12 +16,13 @@ class Appointment extends Component {
     initialState = {
         patientData: {
             patient: '',
-            gender: '',
+            gender: 'Male',
             dob: '',
             age: '',
             apptDate: '',
             phone:'',
             ageQuantifier: 'years',
+            salutation: 'mr',
             address :{
                 street: '',
                 street1: '',
@@ -99,6 +100,28 @@ class Appointment extends Component {
             if(ageQuantifier == "days") {
                 let newDob = new Date(timeNow - (input * 24 * 60 * 60 * 1000));
                 newpatientData.dob = newDob.toISOString().split('T')[0];
+            }
+        }
+
+        if(e.target.name === "salutation") {
+            let input = e.target.value;
+
+            if (input === "mr") {
+                newpatientData.gender = "Male";
+            }
+            else if (input === "ms") {
+                newpatientData.gender = "Female";
+            }
+        }
+
+        if(e.target.name === "gender") {
+            let input = e.target.value;
+            
+            if(input === "Male") {
+                newpatientData.salutation = "mr";
+            }
+            else if (input === "Female") {
+                newpatientData.salutation = "ms";
             }
         }
 
@@ -269,7 +292,7 @@ class Appointment extends Component {
     }
 
     render() {
-        const { patientData: { patient, gender, dob, age, apptDate, phone, ageQuantifier } } = this.state;
+        const { patientData: { patient, gender, dob, age, apptDate, phone, ageQuantifier, salutation } } = this.state;
         const { patientData: { address: { street, street1, city, state, zipCode, country } } } = this.state;
         let tableHeaders = {
             sNo: "SNo",
@@ -285,7 +308,7 @@ class Appointment extends Component {
                     <div className={classes.ApptForm}>
                         <div>
                             <label className={classes.Label}>Patient name</label>
-                            <select name="salutation" id="salutation">
+                            <select name="salutation" value={salutation} onChange={this.updatePatientData}>
                                 <option value="mr">Mr.</option>
                                 <option value="ms">Mrs./Ms.</option>
                             </select>
