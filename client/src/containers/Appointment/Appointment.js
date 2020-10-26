@@ -54,77 +54,91 @@ class Appointment extends Component {
                 disableAdd: false
             });
         }
+        this.setState({ patientData: newpatientData });
+    }
 
-        if(e.target.name === "dob" || e.target.name === "ageQuantifier") {
-            let today = new Date();
-            let inputDate;
-            let ageQuantifier;
-            if(e.target.name === "ageQuantifier") {
-                inputDate = (this.state.patientData.dob) ? new Date(this.state.patientData.dob) : "";
-                ageQuantifier = e.target.value;
-            }
-            else {
-                 inputDate = new Date(e.target.value);
-                 ageQuantifier = this.state.patientData.ageQuantifier;
-            }
-            console.log(inputDate);
-            if(inputDate !== "") {
-                let timeDiff = today - inputDate;
-                
-                let years = Math.floor(timeDiff / (365 * 24 * 60 * 60 * 1000));
-                if(ageQuantifier == "years") {
-                    newpatientData.age = years;
-                }
-                if(ageQuantifier == "months") {
-                    newpatientData.age = Math.floor(years * 12);
-                }
-                if(ageQuantifier == "days") {
-                    newpatientData.age = Math.floor(timeDiff / (24 * 60 * 60 * 1000));
-                }
-            }
+    onSalutationChange = (e) => {
+        const newpatientData = {...this.state.patientData};
+        newpatientData[e.target.name] = e.target.value;
+        let input = e.target.value;
+
+        if (input === "mr") {
+            newpatientData.gender = "Male";
         }
+        else if (input === "ms") {
+            newpatientData.gender = "Female";
+        }
+        this.setState({ patientData: newpatientData });
+    }
 
-        if(e.target.name === "age") {
-            let input = e.target.value;
-            let ageQuantifier = this.state.patientData.ageQuantifier;
-            let timeNow = new Date().getTime();
+    onGenderChange = (e) => {
+        const newpatientData = {...this.state.patientData};
+        newpatientData[e.target.name] = e.target.value;
+        let input = e.target.value;
 
-            if(ageQuantifier == "years") {          
-                let newDob = new Date(timeNow - (input * 365 * 24 * 60 * 60 * 1000));
-                newpatientData.dob = newDob.toISOString().split('T')[0];
+        if(input === "Male") {
+            newpatientData.salutation = "mr";
+        }
+        else if (input === "Female") {
+            newpatientData.salutation = "ms";
+        }
+        this.setState({ patientData: newpatientData });
+    }
+
+    onDobChange = (e) => {
+        const newpatientData = {...this.state.patientData};
+        newpatientData[e.target.name] = e.target.value; 
+
+        let today = new Date();
+        let inputDate;
+        let ageQuantifier;
+        if(e.target.name === "ageQuantifier") {
+            inputDate = (this.state.patientData.dob) ? new Date(this.state.patientData.dob) : "";
+            ageQuantifier = e.target.value;
+        }
+        else {
+                inputDate = new Date(e.target.value);
+                ageQuantifier = this.state.patientData.ageQuantifier;
+        }
+        console.log(inputDate);
+        if(inputDate !== "") {
+            let timeDiff = today - inputDate;
+            
+            let years = Math.floor(timeDiff / (365 * 24 * 60 * 60 * 1000));
+            if(ageQuantifier == "years") {
+                newpatientData.age = years;
             }
             if(ageQuantifier == "months") {
-                let newDob = new Date(timeNow - (input * 30 * 24 * 60 * 60 * 1000));
-                newpatientData.dob = newDob.toISOString().split('T')[0];
+                newpatientData.age = Math.floor(years * 12);
             }
             if(ageQuantifier == "days") {
-                let newDob = new Date(timeNow - (input * 24 * 60 * 60 * 1000));
-                newpatientData.dob = newDob.toISOString().split('T')[0];
+                newpatientData.age = Math.floor(timeDiff / (24 * 60 * 60 * 1000));
             }
         }
 
-        if(e.target.name === "salutation") {
-            let input = e.target.value;
+        this.setState({ patientData: newpatientData });
+    }
 
-            if (input === "mr") {
-                newpatientData.gender = "Male";
-            }
-            else if (input === "ms") {
-                newpatientData.gender = "Female";
-            }
+    onAgeChange= (e) => {
+        const newpatientData = {...this.state.patientData};
+        newpatientData[e.target.name] = e.target.value;
+
+        let input = e.target.value;
+        let ageQuantifier = this.state.patientData.ageQuantifier;
+        let timeNow = new Date().getTime();
+
+        if(ageQuantifier == "years") {          
+            let newDob = new Date(timeNow - (input * 365 * 24 * 60 * 60 * 1000));
+            newpatientData.dob = newDob.toISOString().split('T')[0];
         }
-
-        if(e.target.name === "gender") {
-            let input = e.target.value;
-            
-            if(input === "Male") {
-                newpatientData.salutation = "mr";
-            }
-            else if (input === "Female") {
-                newpatientData.salutation = "ms";
-            }
+        if(ageQuantifier == "months") {
+            let newDob = new Date(timeNow - (input * 30 * 24 * 60 * 60 * 1000));
+            newpatientData.dob = newDob.toISOString().split('T')[0];
         }
-
+        if(ageQuantifier == "days") {
+            let newDob = new Date(timeNow - (input * 24 * 60 * 60 * 1000));
+            newpatientData.dob = newDob.toISOString().split('T')[0];
+        }
         this.setState({ patientData: newpatientData });
     }
 
@@ -308,7 +322,7 @@ class Appointment extends Component {
                     <div className={classes.ApptForm}>
                         <div>
                             <label className={classes.Label}>Patient name</label>
-                            <select name="salutation" value={salutation} onChange={this.updatePatientData}>
+                            <select name="salutation" value={salutation} onChange={this.onSalutationChange}>
                                 <option value="mr">Mr.</option>
                                 <option value="ms">Mrs./Ms.</option>
                             </select>
@@ -327,7 +341,7 @@ class Appointment extends Component {
                                 type="radio"
                                 value="Male"
                                 checked={gender === "Male"}
-                                onChange={this.updatePatientData}
+                                onChange={this.onGenderChange}
                             />
                             <span>Male</span>
                             <input
@@ -335,7 +349,7 @@ class Appointment extends Component {
                                 type="radio"
                                 value="Female"
                                 checked={gender === "Female"}
-                                onChange={this.updatePatientData}
+                                onChange={this.onGenderChange}
                             />
                             <span>Female</span>
                         </div>
@@ -345,7 +359,7 @@ class Appointment extends Component {
                                 name="dob"
                                 type="date"
                                 value={dob}
-                                onChange={this.updatePatientData}
+                                onChange={this.onDobChange}
                                 required
                             />
                         </div>
@@ -355,10 +369,10 @@ class Appointment extends Component {
                                 name="age"
                                 type="text"
                                 value={age}
-                                onChange={this.updatePatientData}
+                                onChange={this.onAgeChange}
                                 required
                             />
-                            <select name="ageQuantifier" id="ageQ" value={ageQuantifier} onChange={this.updatePatientData}>
+                            <select name="ageQuantifier" id="ageQ" value={ageQuantifier} onChange={this.onDobChange}>
                                 <option value="years">Years</option>
                                 <option value="months">Months</option>
                                 <option value="days">Days</option>
