@@ -1,0 +1,19 @@
+.SearchForm div{
+    width: 100%;
+    padding: 5px;
+    border: 5px;
+}
+
+.SearchForm label {
+    font-weight: bold;
+    margin-bottom: 8px;  
+    text-transform: capitalize; 
+    text-align-last: left;
+    padding: 10px;
+}
+
+.SearchForm input, select {
+    padding:10px;
+    margin: 5px;
+}
+

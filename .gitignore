@@ -1,3 +1,16 @@
 # dependencies
 /server/node_modules
 vs.config.code-workspace
+
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/client/node_modules
+/client/.pnp
+
+# testing
+/client/coverage
+
+# production
+/client/build
+

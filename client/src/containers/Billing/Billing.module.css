@@ -1,0 +1,69 @@
+.Billing {
+    width: 100%;
+    padding: 5px;
+    border: 5px;
+    display: flex;
+    align-content: space-between;
+}
+
+.Billing div {
+    width: 80%;
+}
+
+/* .PatientDetails {
+    width: 100%;
+    padding: 5px;
+    border: 5px;
+} */
+
+.PatientDetails table {
+    border-collapse: collapse;
+    border: 1px solid black;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 10px;
+}
+
+.PatientDetails td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    box-sizing: border-box;
+    padding: 2px 5px;
+}
+
+.PayBill div, .CardDetails div{
+    width: 100%;
+    padding: 5px;
+    border: 5px;
+}
+
+.PayBill label {
+    font-weight: bold;
+    margin-bottom: 8px;  
+    text-transform: capitalize; 
+    text-align-last: left;
+    padding: 10px;
+}
+
+.PayBill input, select {
+    padding:10px;
+    margin: 5px;
+}
+
+.CardDetails input {
+    width:80%;
+}
+
+
+.CardDetails>*:nth-last-child(3){
+    padding: 10px;
+    display: inline-block;
+    width: 25%;
+}
+
+.CardDetails>*:nth-last-child(1),
+.CardDetails>*:nth-last-child(2){
+    /* display: inline-block; */
+    width: 20%;
+}
+

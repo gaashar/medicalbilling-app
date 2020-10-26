@@ -1,0 +1,56 @@
+.ApptForm {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.ApptForm div {
+    width: 100%;
+    padding: 10px;
+}
+
+.ApptForm>*:nth-child(1),
+.ApptForm>*:nth-child(2),
+.ApptForm>*:nth-child(3),
+.ApptForm>*:nth-child(4),
+.ApptForm>*:nth-child(5),
+.ApptForm>*:nth-child(6){
+    width: 47%;
+}
+
+.ScanForm div{
+    width: 100%;
+    padding: 5px;
+    border: 5px;
+}
+
+.ApptForm label, .ScanForm label {
+    font-weight: bold;
+    margin-bottom: 8px;  
+    text-transform: capitalize; 
+    text-align-last: left;
+    padding: 10px;
+}
+
+.AddressLayout label {
+    width: 50%;
+    padding: 10px;
+}
+
+.ApptForm input, select, .ScanForm input, span {
+    padding:10px;
+    margin: 5px;
+}
+
+.AddressLayout>*:nth-child(2),
+.AddressLayout>*:nth-child(3){
+    width: 70%;
+}
+
+.AddressLayout>*:nth-last-child(1),
+.AddressLayout>*:nth-last-child(2),
+.AddressLayout>*:nth-last-child(3),
+.AddressLayout>*:nth-last-child(4){
+    display:inline-block;
+    width: 47%;
+}

@@ -1,0 +1,13 @@
+.Header {
+    margin: 10px 0;
+    width: 100%;
+    box-sizing: border-box;
+    display: block;
+    border: 10px;
+    padding: 20px;
+    color: #70b1e6;
+}
+
+.Header hr {
+    border: 1px solid #70b1e6;
+}
