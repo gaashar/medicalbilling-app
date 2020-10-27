@@ -6,6 +6,8 @@ import Layout from "./containers/Layout/Layout";
 import ViewAppointment from './containers/ViewAppointment/ViewAppointment';
 import Billing from "./containers/Billing/Billing";
 
+const REACT_APP_API_URL  = process.env.REACT_APP_API_URL;
+console.log(REACT_APP_API_URL);
 class App extends Component {
   render () {
     return (

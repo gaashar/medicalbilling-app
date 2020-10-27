@@ -7,8 +7,9 @@ import { NavLink, withRouter } from "react-router-dom";
 
 import classes from "./ViewAppointment.module.css";
 
-class ViewAppointment extends Component {
+const REACT_APP_API_URL  = process.env.REACT_APP_API_URL;
 
+class ViewAppointment extends Component {
     state = {
         fromDate: "",
         toDate: "",
@@ -26,7 +27,7 @@ class ViewAppointment extends Component {
     getPatientsHandler = () => {
         const { fromDate, toDate, status } = this.state;
         let updatedTableData = [];
-        fetch("http://localhost:3001/patient?fDate=" + fromDate + "&tDate=" + toDate + "&status=" + status)
+        fetch( REACT_APP_API_URL + "patient?fDate=" + fromDate + "&tDate=" + toDate + "&status=" + status)
         .then(res => res.json())
         .then(data => {
             data.map(patient => {
