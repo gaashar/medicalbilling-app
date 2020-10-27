@@ -95,7 +95,7 @@ class Billing extends Component {
     saveBillingTransaction = (e) => {
         e.preventDefault();
         const { payableAmount, payMode, patientDetails : { id, totalBalance, amountPaid}, patientDetails } = this.state;
-        if( totalBalance > 0 && payableAmount > 0) {
+        if( totalBalance > 0 && payableAmount > 0 && payableAmount <= totalBalance) {
             let transactionDetails = {
                 txnDate: (new Date()).toLocaleDateString(),
                 paidAmount: payableAmount,
