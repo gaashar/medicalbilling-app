@@ -12,8 +12,6 @@ const SLOTS = {
     "LAB" : null
 };
 
-const REACT_APP_API_URL  = process.env.REACT_APP_API_URL;
-
 class Appointment extends Component {
     initialState = {
         patientData: {
@@ -155,7 +153,7 @@ class Appointment extends Component {
     }
 
     componentDidMount () {
-        fetch(REACT_APP_API_URL + "medicalbills")
+        fetch("http://localhost:3001/medicalbills")
         .then(res => res.json())
         .then(data => this.setState({ medicalBills: data.medicalBills })
         )
@@ -216,7 +214,7 @@ class Appointment extends Component {
         const { patientData: { apptDate} } = this.state;
         
         if (selectedModality !== "LAB") {
-            fetch( REACT_APP_API_URL + "billslots?date="+apptDate+"&modality=" +selectedModality)
+            fetch( "http://localhost:3001/billslots?date="+apptDate+"&modality=" +selectedModality)
             .then(res => res.json())
             .then(data => {
                 let slots= data.slots;
@@ -251,7 +249,7 @@ class Appointment extends Component {
                 modality: selectedModality,
                 slots: 1
             }
-            fetch( REACT_APP_API_URL + "billslots", {
+            fetch( "http://localhost:3001/billslots", {
                 method: "POST",
                 body: JSON.stringify(slotPerDay),
                 headers: { 
@@ -293,7 +291,7 @@ class Appointment extends Component {
             transactions : []
         }
 
-        fetch( REACT_APP_API_URL + "patient", {
+        fetch( "http://localhost:3001/patient", {
             method: "POST",
             body: JSON.stringify(patientFormData),
             headers: { 

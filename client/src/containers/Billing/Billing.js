@@ -7,8 +7,6 @@ import Table from "../../components/UI/Table/Table";
 
 import classes from "./Billing.module.css";
 
-const REACT_APP_API_URL  = process.env.REACT_APP_API_URL;
-
 class Billing extends Component {
     state ={
         patientDetails: {},
@@ -27,7 +25,7 @@ class Billing extends Component {
             if (param[0] === 'patientId') {
                 patientId = param[1];
                 
-                fetch( REACT_APP_API_URL + "patient/" + patientId)
+                fetch( "http://localhost:3001/patient/" + patientId)
                 .then(res => res.json())
                 .then(data => {
                     if(data.transactions.length > 0) {
@@ -113,7 +111,7 @@ class Billing extends Component {
                 updatedPatientDetails["status"] = "Fully Billed";
             }
             updatedPatientDetails.transactions.push(transactionDetails);
-            fetch( REACT_APP_API_URL + "patient/" + id, {
+            fetch( "http://localhost:3001/patient/" + id, {
                 method: "PUT",
                 body: JSON.stringify(updatedPatientDetails),
                 headers: { 
